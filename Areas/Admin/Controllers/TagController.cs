@@ -39,6 +39,54 @@ namespace _16noyabr.Areas.Admin.Controllers
                 await _context.Tags.AddAsync(tag);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("index");
-            } 
+            }
+        public async Task<IActionResult> Update(int id)
+        {
+            if (id <= 0) return BadRequest();
+
+            Tag tag = await _context.Tags.FirstOrDefaultAsync(c => c.Id == id);
+            if (tag is null) return NotFound();
+            return View(tag);
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, Tag tag)
+        {
+            if (ModelState.IsValid)
+            {
+                return View();
+            }
+
+            Tag existed = await _context.Tags.FirstOrDefaultAsync(c => c.Id == id);
+            if (existed is null) return NotFound();
+            bool result = _context.Categories.Any(c => c.Name == tag.Name && c.Id != id);
+            if (result)
+            {
+                ModelState.AddModelError("Name", "Movcuddur");
+                return View();
+            }
+
+            existed.Name = tag.Name;
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id <= 0) return BadRequest();
+
+            Tag existed = await _context.Tags.FirstOrDefaultAsync(c => c.Id == id);
+            if (existed is null) return NotFound();
+            _context.Tags.Remove(existed);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+
+
+
+
+        }
     }
 }
