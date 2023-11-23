@@ -71,7 +71,14 @@ namespace _16noyabr.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            if (id <= 0) return BadRequest();
+            var tag = await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
+            if (tag is null) return NotFound();
 
+            return View(tag);
+        }
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0) return BadRequest();

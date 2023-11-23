@@ -10,9 +10,9 @@ namespace _16noyabr.Models
         public string Title { get; set; }
         public string SubTitle { get; set; }
         public string Description { get; set; }
-        public string Images { get; set; }
+        public string? Images { get; set; }
         public int Order { get; set; }
         [NotMapped]
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
     }
 }
