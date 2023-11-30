@@ -15,6 +15,7 @@ namespace _16noyabr.DAL
         public DbSet<Tag> Tags { get; set; }
         public DbSet<ProductTag> ProductTags { get; set; }
         public DbSet<Slide> Slides { get; set; }
+        public DbSet<Setting> Settings { get; set; }
 
     }
 }
